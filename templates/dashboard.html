@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="refresh" content="10">
+	<tite>Cowrie Honeypot Dashboard</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background: #101827;
+			color: white;
+			text-align: center;
+			padding: 40px;
+		}
+
+		.card {
+			background: #1e293b;
+			border-radius: 12px;
+			padding: 25px;
+			margin: 20px auto;
+			max-width: 350px;
+		}
+
+		.number {
+			font-size: 40px;
+			color: #38bdf8;
+		}
+		.chart-card {
+			background: #le293b;
+			border-radius: 12px;
+			padding: 25px;
+			margin: 30px auto;
+			max-width: 700px;
+		}
+
+		table {
+			width: 90%;
+			max-width: 700px;
+			border-collapse: collapse;
+			background: #le293b;
+		}
+
+		th, td {
+			padding: 14px;
+			border: 1px solid #334155;
+			text_align: left;
+			overflow-wrap: anywhere;
+		}
+
+		th {
+			background: #0f172a;
+			color: #38bdf8;
+		}
+	</style>
+</head>
+<body>
+	<h1>Cowrie Honeypot Dashboard</h1>
+	<p>SSH Honeypot Monitoring System</p>
+
+	<div class="card">
+		<h2>Total Events</h2>
+		<div class="number">{{ total_events }}</div>
+	</div>
+
+	<div class="card">
+		<h2>SSH Connections</h2>
+		<div class="number">{{ connections }}</div>
+	</div>
+
+	<div class="card">
+		<h2>Login Attempts</h2>
+		<div class="number">{{ login_attempts }}</div>
+	</div>
+
+	<div class="card">
+		<h2>Commands Entered</h2>
+		<div class="number">{{ commands }}</div>
+	</div>
+
+	<div class="chart-card">
+		<h2>Honeypot Activity</h2>
+		<canvas id="activityChart"></canvas>
+	</div>
+
+	<script>
+		const ctx = document.getElementById("activityChart");
+		new Chart(ctx, {
+			type: "bar",
+			data: {
+				labels: [
+					"Connection",
+					"Login Attempts",
+					"Commands"
+				],
+				datasets: [{
+					label: "Recorded Events",
+					data: [
+						{{ connections | tojson }},
+						{{ login_attempts | tojson}},
+						{{ commands | tojson }}
+					],
+					backgroundColor: "#38bdf8",
+					borderRadius: 6
+				}]
+			},
+			options: {
+				responsive: true,
+				plugins: {
+					legend: {
+						labels: {
+							color: "white"
+						}
+					}
+				},
+				scales: {
+					x: {
+						ticks: {
+							color: "white"
+						}
+					},
+					y: {
+						beginAtZero: true,
+						ticks: {
+							color: "white",
+							stepSize: 1,
+							precision: 0
+						}
+					}
+				}
+			}
+		});
+	</script>
+
+	<h2>Source IP Addresses</h2>
+
+	<table>
+		<tr>
+			<th>IP Address</th>
+			<th>Connections</th>
+		</tr>
+
+		{% for ip, count in ip_addresses %}
+		<tr>
+			<td>{{ ip }}</td>
+			<td>{{ count }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+	<h2>Attempted Usernames</h2>
+
+	<table>
+		<tr>
+			<th>Username</th>
+			<th>Attempts</th>
+		</tr>
+
+		{% for username, count in usernames %}
+		<tr>
+			<td>{{ username }}</td>
+			<td>{{ count }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+	<h2>Commands Entered</h2>
+
+	<table>
+		<tr>
+			<th>Command</th>
+			<th>count</th>
+		</tr>
+
+		{% for command, count in entered_commands %}
+		<tr>
+			<td>{{ command }}</td>
+			<td>{{ count }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+		
+</body>
+</html>			

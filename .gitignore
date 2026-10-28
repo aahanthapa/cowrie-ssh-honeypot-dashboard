@@ -1,0 +1,35 @@
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+cowrie-env/
+
+# Cowrie telemetry and database files
+var/log/
+*.log
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+
+# Backups and temporary files
+*backup*
+*before_cleanup*
+*.bak
+*.tmp
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+etc/cowrie.cfg
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Operating-system and editor artifacts
+.DS_Store
+.vscode/
+.idea/
