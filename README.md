@@ -6,7 +6,7 @@
 
 ## Overview
 
-This project combines [Cowrie](https://github.com/cowrie/cowrie), a medium-interaction SSH honeypot, with Python, SQLite, and Flask. Cowrie records connection attempts, authentication events, and commands issued inside its simulated shell. A Python importer stores those events in SQLite, and a Flask dashboard presents the results through summary cards, a bar chart, and event-analysis tables.
+This project combines [Cowrie](https://github.com/cowrie/cowrie), a medium interaction SSH honeypot, with Python, SQLite, and Flask. Cowrie records connection attempts, authentication events, and commands issued inside its simulated shell. A Python importer stores those events in SQLite, and a Flask dashboard presents the results through summary cards, a bar chart, and event-analysis tables.
 
 The goal is to practice **security monitoring, log analysis, Python automation, SQL, and dashboard development** in a controlled environment.
 
@@ -96,13 +96,20 @@ I tested the project using controlled SSH connections to Cowrie's local honeypot
 
 This test confirmed that new local honeypot activity was stored and displayed after refreshing the dashboard. Re-running the importer without additional activity did not increase the existing event count. **These were controlled lab interactions, not evidence of real-world external attacks.**
 
+
 ## Screenshots
 
-Dashboard screenshots will be added here after cropping or capturing them cleanly and checking that they do not reveal credentials, private logs, or other sensitive information.
+### Dashboard Overview
+
+![Cowrie Honeypot Dashboard Overview](screenshots/dashboard-overview.png)
+
+### SSH Attack Activity
+
+![Cowrie SSH Attack Activity](screenshots/attack-activity.png)
 
 ## Security and Privacy
 
-- Cowrie and Flask were tested on local interfaces; the project does not require exposing either service directly to the public internet.
+- Cowrie and Flask were tested on local interfaces the project does not require exposing either service directly to the public internet.
 - Never commit captured credentials, private IP/contextual data, raw Cowrie JSON logs, `.db` files, secret keys, or local VM configuration.
 - Review files manually before publishing; `.gitignore` only filters matching untracked files and is not a substitute for a security review.
 - Use only authorized lab systems for traffic generation.
